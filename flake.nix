@@ -36,7 +36,7 @@
         # Needs input on specific tools required!
         cCppEnvPkgs = with pkgs; [
           # Core toolchain
-          conan2
+          conan
           cmake
           clang
           lld
