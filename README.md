@@ -13,7 +13,7 @@ Currently defined shells (accessible via `devShells.<system>.<name>`):
 * `python`: Standard Python 3 environment with common data science libraries (numpy, pandas, etc.) and pip.
 * `c-cpp`: C/C++ environment with Clang, Conan, CMake, and Ninja.
 * `latex`: A full TeX Live environment for LaTeX document preparation.
-* *(Add more as you define them)*
+* *(Many more to follow)*
 
 ## Usage: Setting Up a New Project
 
