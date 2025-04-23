@@ -13,7 +13,7 @@ Currently defined shells (accessible via `devShells.<system>.<name>`):
 * `python`: Standard Python 3 environment with common data science libraries (numpy, pandas, etc.) and pip.
 * `c-cpp`: C/C++ environment with Clang, Conan, CMake, and Ninja.
 * `latex`: A full TeX Live environment for LaTeX document preparation.
-* *(Many more to follow)*
+* *Many more to follow, contributions welcome :)*
 
 ## Usage: Setting Up a New Project
 
@@ -31,7 +31,7 @@ To use one of these shells in a new project (e.g., `my-new-project` wanting the 
     ```
 
 3.  **Create Project `flake.nix`:**
-    Create a file named `flake.nix` in the root of `my-new-project` with the following content. **Make sure to replace `<your-username>` with your actual GitHub username!**
+    Create a file named `flake.nix` in the root of `my-new-project` with the following content.
 
     ```nix
     # my-new-project/flake.nix
