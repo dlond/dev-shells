@@ -43,8 +43,7 @@ To use one of these shells in a new project (e.g., `my-new-project` wanting the 
         nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
         # Input for the reusable development shells
-        # !! REPLACE <your-username> !!
-        dev-shells.url = "github:<your-username>/dev-shells";
+        dev-shells.url = "github:dlond/dev-shells";
         # Optional but recommended: Ensure dev-shells uses the same nixpkgs
         dev-shells.inputs.nixpkgs.follows = "nixpkgs";
 
