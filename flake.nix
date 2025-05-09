@@ -51,7 +51,7 @@
         ];
 
       in
-      {
+        {
         # --- Exported Development Shells ---
 
         devShells = {
@@ -59,30 +59,33 @@
           python = pkgs.mkShell {
             name = "python-shell";
             buildInputs = [ pythonEnv ];
+            shell = "${pkgs.zsh}/bin/zsh"
             shellHook = ''
               # Set VIRTUAL_ENV for prompt or tools recognizing it (optional)
               export VIRTUAL_ENV="$PWD/.nix-python-env"
               # Do NOT manipulate PATH here for buildInputs.
               echo "Activated Nix Python environment from dev-shells flake."
               # You could add more hooks, e.g. unset VIRTUAL_ENV on exit
-            '';
+              '';
           };
 
           latex = pkgs.mkShell {
             name = "latex-shell";
             buildInputs = [ latexEnv pkgs.chktex ]; # Add chktex or other tools
+            shell = "${pkgs.zsh}/bin/zsh"
             shellHook = ''
               echo "Activated Nix LaTeX environment from dev-shells flake."
-            '';
+              '';
           };
 
           c-cpp = pkgs.mkShell {
-             name = "c-cpp-shell";
-             buildInputs = cCppEnvPkgs;
-             shellHook = ''
+            name = "c-cpp-shell";
+            buildInputs = cCppEnvPkgs;
+            shell = "${pkgs.zsh}/bin/zsh"
+              shellHook = ''
               echo "Activated Nix C/C++ environment from dev-shells flake."
-             '';
-             # Add env vars if needed, e.g. for include paths, though pkg-config helps
+              '';
+            # Add env vars if needed, e.g. for include paths, though pkg-config helps
           };
 
         }; # End devShells
