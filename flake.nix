@@ -59,7 +59,7 @@
           python = pkgs.mkShell {
             name = "python-shell";
             buildInputs = [ pythonEnv ];
-            shell = "${pkgs.zsh}/bin/zsh"
+            shell = "${pkgs.zsh}/bin/zsh";
             shellHook = ''
               # Set VIRTUAL_ENV for prompt or tools recognizing it (optional)
               export VIRTUAL_ENV="$PWD/.nix-python-env"
@@ -72,7 +72,7 @@
           latex = pkgs.mkShell {
             name = "latex-shell";
             buildInputs = [ latexEnv pkgs.chktex ]; # Add chktex or other tools
-            shell = "${pkgs.zsh}/bin/zsh"
+            shell = "${pkgs.zsh}/bin/zsh";
             shellHook = ''
               echo "Activated Nix LaTeX environment from dev-shells flake."
               '';
@@ -81,7 +81,7 @@
           c-cpp = pkgs.mkShell {
             name = "c-cpp-shell";
             buildInputs = cCppEnvPkgs;
-            shell = "${pkgs.zsh}/bin/zsh"
+            shell = "${pkgs.zsh}/bin/zsh";
               shellHook = ''
               echo "Activated Nix C/C++ environment from dev-shells flake."
               '';
