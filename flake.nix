@@ -55,13 +55,14 @@
             shell = "${pkgs.zsh}/bin/zsh";
           };
 
-          cpp = pkgs.mkShell {
+          c-cpp = pkgs.mkShell {
             name = "c-cpp-shell";
             buildInputs = cCppEnvPkgs;
             shell = "${pkgs.zsh}/bin/zsh";
             shellHook = ''
               export CPLUS_INCLUDE_PATH="${pkgs.llvmPackages.libcxx}/include/c++/v1:$CPLUS_INCLUDE_PATH"
-              export CPATH="$(xcrun --sdk macosx --show-sdk-path)/usr/include:$CPATH"
+              SDKROOT=$(xcrun --sdk macos --show-sdk-path)
+              export C_INCLUDE_PATH="$SDKROOT/usr/include:$C_INCLUDE_PATH"
             '';
           };
         };
