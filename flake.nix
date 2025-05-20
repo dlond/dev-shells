@@ -42,6 +42,9 @@
           lld
           ninja
 
+          # C++ standard-library headers and libs
+          llvmPackages.libcxx
+
           # Common utilities
           pkg-config
           llvmPackages.lldb
