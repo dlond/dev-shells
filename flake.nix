@@ -86,7 +86,7 @@
             buildInputs = cCppEnvPkgs;
             shell = "${pkgs.zsh}/bin/zsh";
               shellHook = ''
-                export CPLUS_INCLUDE_PATH="${pkgs.llvmPackages.libcxx}/include/c++/v1${CPLUS_INCLUDE_PATH:+:}$CPLUS_INCLUDE_PATH"
+                export CPLUS_INCLUDE_PATH="${pkgs.llvmPackages.libcxx}/include/c++/v1:$CPLUS_INCLUDE_PATH"
                 echo "Activated Nix C/C++ environment from dev-shells flake."
               '';
             # Add env vars if needed, e.g. for include paths, though pkg-config helps
