@@ -89,7 +89,7 @@
                 # C++ stdlib
                 export CPLUS_INCLUDE_PATH="${pkgs.llvmPackages.libcxx}/include/c++/v1:$CPLUS_INCLUDE_PATH"
                 # C system headers (libSystem-B)
-                export C_INCLUDE_PATH="$(xcrun --sdk macosx --show-sdk-path)/usr/include:$C_INCLUDE_PATH"
+                export CPATH="$(xcrun --sdk macosx --show-sdk-path)/usr/include:$CPATH"
                 echo "Activated Nix C/C++ environment from dev-shells flake."
               '';
             # Add env vars if needed, e.g. for include paths, though pkg-config helps
