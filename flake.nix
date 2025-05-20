@@ -61,6 +61,7 @@
             shell = "${pkgs.zsh}/bin/zsh";
             shellHook = ''
               export CPLUS_INCLUDE_PATH="${pkgs.llvmPackages.libcxx}/include/c++/v1:$CPLUS_INCLUDE_PATH"
+              export CPATH="$(xcrun --sdk macosx --show-sdk-path)/usr/include:$CPATH"
             '';
           };
         };
