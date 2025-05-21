@@ -92,7 +92,7 @@
         };
 
         cCppToolchain = {
-          inherit clangDriverPath hostSysrootPath hostSystemIncludePath libcxxIncludePath clangResourceDirInclude clangggg
+          inherit clangDriverPath hostSysrootPath hostSystemIncludePath libcxxIncludePath clangResourceDirInclude clangggg;
         };
       }
     );
