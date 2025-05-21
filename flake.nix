@@ -20,7 +20,7 @@
         llvmPackage = pkgs.llvmPackages; # dev-shells (this) is responsible for toolchain versioning
 
         clangCompilerForDriver = llvmPackage.clang-unwrapped;
-        clangDriverPath = "${clangCompilerForDriver}/bin/clang++";
+        clangDriverPath = "${llvmPackage.clang-tools}/bin/clang++";
 
         clangMajorVersion = lib.versions.major clangCompilerForDriver.version;
         clangResourceDirInclude = "${clangCompilerForDriver}/lib/clang/${clangMajorVersion}/include";
