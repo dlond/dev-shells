@@ -1,5 +1,5 @@
 {
-  description = "Reusable development shells (Python, LaTeX, C/C++)";
+  description = "Reusable development shells (C/C++, Python, LaTeX)";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -16,6 +16,47 @@
         pkgs = nixpkgs.legacyPackages.${system};
         lib = nixpkgs.lib;
 
+        # --- C/C++ environment ---
+        llvmPackage = pkgs.llvmPackages; # dev-shells (this) is responsible for toolchain versioning
+
+        clangCompilerForDriver = llvmPackage.clang-unwrapped;
+        clangDriverPath = "${clangCompilerForDriver}/bin/clang++";
+
+        clangMajorVersion = lib.versions.major clangCompilerForDriver.version;
+        clangResourceDirInclude = "${clangCompilerForDriver}/lib/clang/${clangMajorVersion}/include";
+
+        hostSysrootPath =
+          if pkgs.stdenv.isDarwin
+          then pkgs.darwin.apple_sdk.MacOSX-SDK
+          else "";
+
+        hostSystemIncludePath =
+          if pkgs.stenv.isDarwin && hostSysrootPath != ""
+          then "${hostSysrootPath}/usr/include"
+          else "";
+
+        libcxxIncludePath = "${llvmPackage.libcxx.dev}/include/c++/v1";
+
+        cCppEnv = with pkgs; [
+          # Build tools
+          conan
+          cmake
+          ninja
+          pkg-config
+
+          # Compiler etc from LLVM set
+          llvmPackage.clang-unwrapped
+          llvmPackage.lld
+          llvmPackage.libcxx.dev
+          llvmPackage.clang-tools
+
+          # Core C system headers for Darwin
+          (lib.optional pkgs.stdenv.isDarwin pkgs.darwin.Libsystem)
+
+          # Darwin SDK
+          (lib.optional pkgs.stdenv.isDarwin pkgs.darwin.apple_sdk.MacOSX-SDK)
+        ];
+
         # --- Python environment ---
         pythonEnv = pkgs.python3.withPackages (ps:
           with ps; [
@@ -29,22 +70,13 @@
 
         # --- LaTeX environment ---
         latexEnv = pkgs.texlive.combined.scheme-full;
-
-        # --- C/C++ environment ---
-        cCppEnvPkgs = with pkgs; [
-          (lib.optional pkgs.stdenv.isDarwin pkgs.darwin.Libsystem)
-          llvmPackages.clang-unwrapped
-          llvmPackages.lld
-          llvmPackages.libcxx.dev
-          llvmPackages.clang-tools
-
-          cmake
-          conan
-          ninja
-          pkg-config
-        ];
       in {
         devShells = {
+          c-cpp = pkgs.mkShell {
+            name = "c-cpp-shell";
+            buildInputs = lib.filter (x: x != null) cCppEnv;
+            shell = "${pkgs.zsh}/bin/zsh";
+          };
           python = pkgs.mkShell {
             name = "python-shell";
             buildInputs = [pythonEnv];
@@ -56,12 +88,10 @@
             buildInputs = [latexEnv];
             shell = "${pkgs.zsh}/bin/zsh";
           };
+        };
 
-          c-cpp = pkgs.mkShell {
-            name = "c-cpp-shell";
-            buildInputs = lib.filter (x: x != null) cCppEnvPkgs;
-            shell = "${pkgs.zsh}/bin/zsh";
-          };
+        cCppToolchain = {
+          inherit clangDriverPath hostSysrootPath hostSystemIncludePath libcxxIncludePath clangResourceDirInclude;
         };
       }
     );
