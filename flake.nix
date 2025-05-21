@@ -31,7 +31,7 @@
           else "";
 
         hostSystemIncludePath =
-          if pkgs.stdenv.isDarwin && hostSysrootPath != ""
+          if pkgs.stenv.isDarwin && hostSysrootPath != ""
           then "${hostSysrootPath}/usr/include"
           else "";
 
