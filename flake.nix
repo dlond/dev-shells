@@ -29,6 +29,7 @@
           conan
           lld
           llvmPackages.clang-tools
+          llvmPackages.clangd
           llvmPackages.libcxx
           ninja
           pkg-config
