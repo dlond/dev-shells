@@ -25,7 +25,7 @@
         cCppEnvPkgs = with pkgs; [
           apple-sdk
           llvmPackages.clang-unwrapped
-          llvmPackages.ldd
+          llvmPackages.lld
           llvmPackages.libcxx.dev
           llvmPackages.clang-tools
 
