@@ -24,11 +24,13 @@
         # --- C/C++ environment ---
         cCppEnvPkgs = with pkgs; [
           apple-sdk
+          llvmPackages.clang-unwrapped
+          llvmPackages.ldd
+          llvmPackages.libcxx.dev
+          llvmPackages.clang-tools
+
           cmake
           conan
-          lld
-          llvmPackages.clang-tools
-          llvmPackages.libcxx
           ninja
           pkg-config
         ];
