@@ -14,16 +14,25 @@
     flake-utils.lib.eachDefaultSystem (
       system: let
         pkgs = nixpkgs.legacyPackages.${system};
+        lib = nixpkgs.lib;
 
         # --- Python environment ---
-        pythonEnv = pkgs.python3.withPackages (ps: with ps; [numpy pandas scipy matplotlib ipython black ruff]);
+        pythonEnv = pkgs.python3.withPackages (ps:
+          with ps; [
+            numpy
+            pandas
+            scipy
+            matplotlib
+            ipython
+            pip
+          ]);
 
         # --- LaTeX environment ---
         latexEnv = pkgs.texlive.combined.scheme-full;
 
         # --- C/C++ environment ---
         cCppEnvPkgs = with pkgs; [
-          apple-sdk
+          (lib.optional pkgs.stdenv.isDarwin pkgs.darwin.Libsystem)
           llvmPackages.clang-unwrapped
           llvmPackages.lld
           llvmPackages.libcxx.dev
@@ -44,13 +53,13 @@
 
           latex = pkgs.mkShell {
             name = "latex-shell";
-            buildInputs = [latexEnv pkgs.chktex];
+            buildInputs = [latexEnv];
             shell = "${pkgs.zsh}/bin/zsh";
           };
 
           c-cpp = pkgs.mkShell {
             name = "c-cpp-shell";
-            buildInputs = cCppEnvPkgs;
+            buildInputs = lib.filter (x: x != null) cCppEnvPkgs;
             shell = "${pkgs.zsh}/bin/zsh";
           };
         };
