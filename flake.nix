@@ -21,7 +21,6 @@
 
         clangCompilerForDriver = llvmPackage.clang-unwrapped;
         clangDriverPath = "${clangCompilerForDriver}/bin/clang++";
-        clangggg = "${llvmPackage.clang-tools}";
 
         clangMajorVersion = lib.versions.major clangCompilerForDriver.version;
         clangResourceDirInclude = "${clangCompilerForDriver}/lib/clang/${clangMajorVersion}/include";
@@ -92,7 +91,7 @@
         };
 
         cCppToolchain = {
-          inherit clangDriverPath hostSysrootPath hostSystemIncludePath libcxxIncludePath clangResourceDirInclude clangggg;
+          inherit clangDriverPath hostSysrootPath hostSystemIncludePath libcxxIncludePath clangResourceDirInclude;
         };
       }
     );
