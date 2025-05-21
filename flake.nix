@@ -24,7 +24,6 @@
         # --- C/C++ environment ---
         cCppEnvPkgs = with pkgs; [
           apple-sdk
-          clang
           cmake
           conan
           lld
