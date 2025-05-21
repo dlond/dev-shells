@@ -19,7 +19,7 @@
         pythonEnv = pkgs.python3.withPackages (ps: with ps; [numpy pandas scipy matplotlib ipython black ruff]);
 
         # --- LaTeX environment ---
-        latexEnv = pkgs.texlive.combined.scheme-medium;
+        latexEnv = pkgs.texlive.combined.scheme-full;
 
         # --- C/C++ environment ---
         cCppEnvPkgs = with pkgs; [
@@ -36,20 +36,9 @@
         ];
       in {
         devShells = {
-          # a single, “all-in-one” shell
-          # all = pkgs.mkShell {
-          #   name = "all-dev";
-          #   buildInputs = pythonEnv :: latexEnv :: cCppEnvPkgs;
-          #   shell = "${pkgs.zsh}/bin/zsh";
-          #   shellHook = ''
-          #     export CPLUS_INCLUDE_PATH="${pkgs.llvmPackages.libcxx}/include/c++/v1:$CPLUS_INCLUDE_PATH"
-          #   '';
-          # };
-
-          # or pick just one
           python = pkgs.mkShell {
             name = "python-shell";
-            buildInputs = pythonEnv;
+            buildInputs = [pythonEnv];
             shell = "${pkgs.zsh}/bin/zsh";
           };
 
