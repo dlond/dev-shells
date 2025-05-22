@@ -19,23 +19,25 @@
         # --- C/C++ environment ---
         llvmPackage = pkgs.llvmPackages; # dev-shells (this) is responsible for toolchain versioning
 
-        clangCompilerForDriver = llvmPackage.clang-unwrapped;
-        clangDriverPath = "${clangCompilerForDriver}/bin/clang++";
+        clangCompiler = llvmPackage.clang-unwrapped;
+        clangMajorVersion = lib.versions.major clangCompiler.version;
 
-        clangMajorVersion = lib.versions.major clangCompilerForDriver.version;
-        clangResourceDirInclude = "${clangCompilerForDriver}/lib/clang/${clangMajorVersion}/include";
+        clangResourceDirInclude = "${clangCompiler}/lib/clang/${clangMajorVersion}/include";
 
-        hostSysrootPath =
+        # macOS SDK path
+        macosSdkPath =
           if pkgs.stdenv.isDarwin
           then pkgs.darwin.apple_sdk.MacOSX-SDK
           else "";
 
-        hostSystemIncludePath =
-          if pkgs.stdenv.isDarwin && hostSysrootPath != ""
-          then "${hostSysrootPath}/usr/include"
-          else "";
-
+        # Path to libc++ headers
         libcxxIncludePath = "${llvmPackage.libcxx.dev}/include/c++/v1";
+
+        # Path to general system C headers within the SDK
+        sdkUsrIncludePath =
+          if pkgs.stdenv.isDarwin && macosSdkPath != ""
+          then "${macosSdkPath}/usr/include"
+          else "";
 
         cCppEnv = with pkgs; [
           # Build tools
@@ -51,10 +53,10 @@
           llvmPackage.clang-tools
 
           # Core C system headers for Darwin
-          (lib.optional pkgs.stdenv.isDarwin pkgs.darwin.Libsystem)
+          # (lib.optional pkgs.stdenv.isDarwin pkgs.darwin.Libsystem)
 
           # Darwin SDK
-          (lib.optional pkgs.stdenv.isDarwin pkgs.darwin.apple_sdk.MacOSX-SDK)
+          # (lib.optional pkgs.stdenv.isDarwin pkgs.darwin.apple_sdk.MacOSX-SDK)
         ];
 
         # --- Python environment ---
@@ -91,7 +93,7 @@
         };
 
         cCppToolchain = {
-          inherit clangDriverPath hostSysrootPath hostSystemIncludePath libcxxIncludePath clangResourceDirInclude;
+          inherit macosSdkPath sdkUsrIncludePath clangResourceDirInclude libcxxIncludePath;
         };
       }
     );
