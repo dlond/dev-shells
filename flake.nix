@@ -48,9 +48,9 @@
 
           # Compiler etc from LLVM set
           llvmPackage.clang-unwrapped
-          llvmPackage.lld
-          llvmPackage.libcxx.dev
           llvmPackage.clang-tools
+          llvmPackage.libcxx.dev
+          llvmPackage.lld
 
           # Core C system headers for Darwin
           # (lib.optional pkgs.stdenv.isDarwin pkgs.darwin.Libsystem)
