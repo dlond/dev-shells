@@ -16,7 +16,7 @@
         pkgs = nixpkgs.legacyPackages.${system};
 
         # --- C/C++ environment ---
-        llvmVersion = "llvmPackages_19";
+        llvmVersion = "llvmPackages_18";
         llvm = pkgs.${llvmVersion};
         crossClang = pkgs.pkgsCross.aarch64-multiplatform.${llvmVersion}.clang;
 
