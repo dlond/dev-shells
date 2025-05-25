@@ -54,7 +54,11 @@
             name = "c-cpp-shell";
             buildInputs = [cCppEnv];
             shell = "${pkgs.zsh}/bin/zsh";
+            shellHook = ''
+              export LLDB_DEBUGSERVER_PATH=/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Versions/A/Resources/debugserver
+            '';
           };
+
           python = pkgs.mkShell {
             name = "python-shell";
             buildInputs = [pythonEnv];
