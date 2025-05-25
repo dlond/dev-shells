@@ -16,7 +16,9 @@
         pkgs = nixpkgs.legacyPackages.${system};
 
         # --- C/C++ environment ---
-        llvm = pkgs.llvmPackages;
+        llvmVersion = "llvmPackages_19";
+        llvm = pkgs.${llvmVersion};
+        crossClang = pkgs.pkgsCross.aarch64-multiplatform.${llvmVersion}.clang;
 
         cCppEnv = with pkgs; [
           # Build tools
@@ -33,7 +35,7 @@
           llvm.libcxx.dev
 
           # Common cross-compilation tools
-          pkgsCross.aarch64-multiplatform.clang
+          crossClang
         ];
 
         # --- Python environment ---
