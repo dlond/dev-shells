@@ -16,9 +16,17 @@
         pkgs = nixpkgs.legacyPackages.${system};
 
         # --- C/C++ environment ---
-        llvmVersion = "llvmPackages_18";
+        llvmVersion = "llvmPackages";
         llvm = pkgs.${llvmVersion};
-        crossClang = pkgs.pkgsCross.aarch64-multiplatform.${llvmVersion}.clang;
+        crossClang =
+          pkgs.pkgsCross.aarch64-multiplatform.${llvmVersion}.clang.overrideAttrs
+          (old: {
+            cmakeFlags =
+              (old.cmakeFlags or [])
+              ++ [
+                "-DLLVM_TARGETS_TO_BUILD=AArch64"
+              ];
+          });
 
         cCppEnv = with pkgs; [
           # Build tools
@@ -31,6 +39,7 @@
           llvm.clang
           llvm.clang-tools
           llvm.lld
+          llvm.lldb
           llvm.libcxx
           llvm.libcxx.dev
 
