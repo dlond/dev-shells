@@ -31,6 +31,9 @@
           llvm.lld
           llvm.libcxx
           llvm.libcxx.dev
+
+          # Common cross-compilation tools
+          pkgsCross.aarch64-multiplatform.clang
         ];
 
         # --- Python environment ---
