@@ -18,15 +18,6 @@
         # --- C/C++ environment ---
         llvmVersion = "llvmPackages";
         llvm = pkgs.${llvmVersion};
-        crossClang =
-          pkgs.pkgsCross.aarch64-multiplatform.${llvmVersion}.clang.overrideAttrs
-          (old: {
-            cmakeFlags =
-              (old.cmakeFlags or [])
-              ++ [
-                "-DLLVM_TARGETS_TO_BUILD=AArch64"
-              ];
-          });
 
         cCppEnv = with pkgs; [
           # Build tools
@@ -42,9 +33,6 @@
           llvm.lldb
           llvm.libcxx
           llvm.libcxx.dev
-
-          # Common cross-compilation tools
-          crossClang
         ];
 
         # --- Python environment ---
